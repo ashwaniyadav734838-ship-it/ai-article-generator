@@ -1,27 +1,111 @@
-<script>
-async function generateArticle() {
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Article Generator</title>
 
-const topic =
-document.getElementById("topic").value;
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+        }
 
-document.getElementById("output").innerHTML =
-"Generating article...";
+        h1{
+            text-align: center;
+        }
 
-const response = await fetch(
-"https://hook.eu1.make.com/mu62vvnt7d4sxwfrj10mtah3f2ergmkj",
-{
-method: "POST",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify({
-topic: topic
-})
-}
-);
+        .container{
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
 
-const article = await response.text();
+        input{
+            flex: 1;
+            padding: 12px;
+            font-size: 18px;
+        }
 
-document.getElementById("output").innerHTML = article;
-}
-</script>
+        button{
+            padding: 12px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        #output{
+            border: 1px solid #ccc;
+            padding: 20px;
+            min-height: 200px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>AI Article Generator</h1>
+
+    <div class="container">
+        <input
+            type="text"
+            id="topic"
+            placeholder="Enter Article Topic">
+
+        <button onclick="generateArticle()">
+            Generate Article
+        </button>
+    </div>
+
+    <div id="output">
+        Enter a topic and click Generate Article.
+    </div>
+
+    <script>
+
+    async function generateArticle() {
+
+        const topic = document.getElementById("topic").value;
+
+        if(!topic){
+            alert("Please enter a topic.");
+            return;
+        }
+
+        document.getElementById("output").innerHTML =
+        "Generating article... Please wait.";
+
+        try {
+
+            const response = await fetch(
+                "https://hook.eu1.make.com/mu62vvnt7d4sxwfrj10mtah3f2ergmkj",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        topic: topic
+                    })
+                }
+            );
+
+            const article = await response.text();
+
+            document.getElementById("output").innerHTML =
+            article;
+
+        } catch(error) {
+
+            document.getElementById("output").innerHTML =
+            "Error: " + error.message;
+
+        }
+
+    }
+
+    </script>
+
+</body>
+</html>
