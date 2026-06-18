@@ -1,56 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>AI Article Generator</title>
-
-<style>
-body{
-font-family:Arial;
-max-width:900px;
-margin:50px auto;
-padding:20px;
-}
-
-input{
-width:70%;
-padding:10px;
-font-size:16px;
-}
-
-button{
-padding:10px 20px;
-font-size:16px;
-cursor:pointer;
-}
-
-#output{
-margin-top:20px;
-padding:20px;
-border:1px solid #ccc;
-white-space:pre-wrap;
-}
-</style>
-
-</head>
-
-<body>
-
-<h1>AI Article Generator</h1>
-
-<input
-type="text"
-id="topic"
-placeholder="Enter Article Topic">
-
-<button onclick="generateArticle()">
-Generate Article
-</button>
-
-<div id="output"></div>
-
 <script>
-
-async function generateArticle(){
+async function generateArticle() {
 
 const topic =
 document.getElementById("topic").value;
@@ -58,21 +7,21 @@ document.getElementById("topic").value;
 document.getElementById("output").innerHTML =
 "Generating article...";
 
-const response =
-await fetch(
-"https://hook.eu1.make.com/mu62vvnt7d4sxwfrj10mtah3f2ergmkj?topic="
-+ encodeURIComponent(topic)
+const response = await fetch(
+"https://hook.eu1.make.com/mu62vvnt7d4sxwfrj10mtah3f2ergmkj",
+{
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+topic: topic
+})
+}
 );
 
-const article =
-await response.text();
+const article = await response.text();
 
-document.getElementById("output").innerHTML =
-article;
-
+document.getElementById("output").innerHTML = article;
 }
-
 </script>
-
-</body>
-</html>
